@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace AliYil.Mandelbrot
 {
-    public partial class Form1 : Form
+    public partial class MandelbrotViewerForm : Form
     {
         private Mandelbrot _mandelbrot;
         private Bitmap _bitmap;
@@ -20,7 +20,7 @@ namespace AliYil.Mandelbrot
 
         private int colorOffset = 0;
 
-        public Form1()
+        public MandelbrotViewerForm()
         {
             InitializeComponent();
         }
