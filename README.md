@@ -1,5 +1,5 @@
 # AliYil.Mandelbrot
-Mandelbrot set visualizer / explorer written in .net
+Multi-core Mandelbrot set visualizer / explorer written in .net
 
 ## Controls
 
