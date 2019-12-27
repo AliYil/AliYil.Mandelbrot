@@ -1,0 +1,11 @@
+# AliYil.Mandelbrot
+Mandelbrot set visualizer / explorer written in .net
+
+## Controls
+
+| Key(s) | Action |
+| :- | :- |
+| Arrow keys | Move camera |
+| + (plus) / - (minus) | Zoom in / out |
+| W / Q | Increase / decrease max. iterations |
+| X / Z | Increase / decrease color palette offset |
