@@ -11,8 +11,8 @@ namespace AliYil.Mandelbrot
     {
         private Mandelbrot _mandelbrot;
         private Bitmap _bitmap;
-        private const int w = 900;
-        private const int h = 900;
+        private int w = 900;
+        private int h = 900;
 
         private double _zoom = 5;
         private double camPosX = 0;
@@ -81,6 +81,7 @@ namespace AliYil.Mandelbrot
             });
             Console.WriteLine($@"Max: {max} - Avg: {avg}");
 
+
             Marshal.Copy(buffer, 0, data.Scan0, buffer.Length);
             _bitmap.UnlockBits(data);
 
@@ -97,57 +98,77 @@ namespace AliYil.Mandelbrot
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             var speed = 0.1;
-            switch (e.KeyCode)
+
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.S)
             {
-                case Keys.Q:
-                    _mandelbrot.TotalIterations -= 10;
-                    break;
-                case Keys.W:
-                    _mandelbrot.TotalIterations += 10;
-                    break;
+                var dialog = new SaveFileDialog
+                {
+                    DefaultExt = "png", FileName = "mandelbrot.png", Filter = "PNG Image (*.png)|*.png"
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    pictureBox1.Image.Save(dialog.FileName, ImageFormat.Png);
+                }
+            }
+            else
+            {
 
-                case Keys.A:
-                    _mandelbrot.Limit -= 10;
-                    break;
-                case Keys.S:
-                    _mandelbrot.Limit += 10;
-                    break;
+                switch (e.KeyCode)
+                {
+                    case Keys.Q:
+                        _mandelbrot.TotalIterations -= 10;
+                        break;
+                    case Keys.W:
+                        _mandelbrot.TotalIterations += 10;
+                        break;
 
-                case Keys.Z:
-                    colorOffset -= 5;
-                    break;
-                case Keys.X:
-                    colorOffset += 5;
-                    break;
+                    case Keys.A:
+                        w -= 10;
+                        h -= 10;
+                        _bitmap = new Bitmap(w, h);
+                        break;
+                    case Keys.S:
+                        w += 10;
+                        h += 10;
+                        _bitmap = new Bitmap(w, h);
+                        break;
 
-                case Keys.Subtract:
-                    _zoom *= 1.1;
-                    break;
-                case Keys.Add:
-                    _zoom *= 0.9;
-                    break;
+                    case Keys.Z:
+                        colorOffset -= 5;
+                        break;
+                    case Keys.X:
+                        colorOffset += 5;
+                        break;
 
-                case Keys.Left:
-                    camPosX -= speed * _zoom;
-                    break;
-                case Keys.Right:
-                    camPosX += speed * _zoom;
-                    break;
-                case Keys.Up:
-                    camPosY += speed * _zoom;
-                    break;
-                case Keys.Down:
-                    camPosY -= speed * _zoom;
-                    break;
+                    case Keys.Subtract:
+                        _zoom *= 1.1;
+                        break;
+                    case Keys.Add:
+                        _zoom *= 0.9;
+                        break;
 
-                case Keys.Space:
-                    _zoom = 5;
-                    camPosX = 0;
-                    camPosY = 0;
-                    break;
+                    case Keys.Left:
+                        camPosX -= speed * _zoom;
+                        break;
+                    case Keys.Right:
+                        camPosX += speed * _zoom;
+                        break;
+                    case Keys.Up:
+                        camPosY += speed * _zoom;
+                        break;
+                    case Keys.Down:
+                        camPosY -= speed * _zoom;
+                        break;
+
+                    case Keys.Space:
+                        _zoom = 5;
+                        camPosX = 0;
+                        camPosY = 0;
+                        break;
+                }
+                UpdateMandelbrot();
             }
 
-            UpdateMandelbrot();
         }
     }
 }
